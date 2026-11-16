@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 # ==========================================
-# 2. FOREST BACKGROUND
+# 2. FOREST BACKGROUND FUNCTION
 # ==========================================
 
 def set_background(image_path):
@@ -33,27 +33,33 @@ def set_background(image_path):
         background_css = f"""
         background-image:
             linear-gradient(
-                rgba(0, 25, 12, 0.65),
-                rgba(0, 25, 12, 0.78)
+                rgba(0, 0, 0, 0.35),
+                rgba(0, 0, 0, 0.50)
             ),
             url("data:image/jpeg;base64,{encoded}");
         """
 
     else:
+
         background_css = """
         background: linear-gradient(
             135deg,
-            #052e16,
-            #064e3b,
-            #022c22
+            #18392b,
+            #263d32,
+            #172b22
         );
         """
+
+        st.warning(
+            "Forest background image not found. "
+            "Please add forest_background.jpg to the project folder."
+        )
 
     st.markdown(
         f"""
         <style>
 
-        /* Main background */
+        /* Natural forest background */
 
         [data-testid="stAppViewContainer"] {{
             {background_css}
@@ -63,9 +69,13 @@ def set_background(image_path):
             background-attachment: fixed;
         }}
 
+        /* Transparent header */
+
         [data-testid="stHeader"] {{
             background: transparent;
         }}
+
+        /* Main content */
 
         .block-container {{
             padding-top: 2rem;
@@ -78,17 +88,17 @@ def set_background(image_path):
             text-align: center;
             font-size: 36px;
             font-weight: bold;
-            color: #ffffff;
+            color: white;
             padding: 22px;
-            background: rgba(2, 44, 34, 0.88);
-            border: 1px solid #22c55e;
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 15px;
             margin-bottom: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 5px black;
         }}
 
         .main-title span {{
-            color: #4ade80;
+            color: #86efac;
         }}
 
         /* Subtitle */
@@ -96,39 +106,36 @@ def set_background(image_path):
         .sub-title {{
             text-align: center;
             font-size: 17px;
-            color: #dcfce7;
+            color: white;
             margin-bottom: 30px;
+            text-shadow: 1px 1px 4px black;
         }}
 
         /* Headings and labels */
 
         h1, h2, h3, p, label {{
-            color: #ffffff !important;
+            color: white !important;
         }}
 
         /* Upload section */
 
         [data-testid="stFileUploader"] {{
-            background: rgba(2, 44, 34, 0.85);
-            border: 2px solid #16a34a;
+            background: rgba(0, 0, 0, 0.48);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 14px;
-            padding: 18px;
+            padding: 16px;
         }}
 
         [data-testid="stFileUploader"] section {{
-            background: rgba(6, 78, 59, 0.85) !important;
-            border: 1px dashed #4ade80 !important;
-            border-radius: 10px !important;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px dashed rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
         }}
 
         [data-testid="stFileUploader"] button {{
-            background: #15803d !important;
+            background: #277a48 !important;
             color: white !important;
-            border: 1px solid #4ade80 !important;
-        }}
-
-        [data-testid="stFileUploader"] small {{
-            color: #dcfce7 !important;
+            border: 1px solid #86efac !important;
         }}
 
         [data-testid="stFileUploader"] span {{
@@ -142,31 +149,31 @@ def set_background(image_path):
             height: 55px;
             background: linear-gradient(
                 90deg,
-                #15803d,
-                #22c55e
+                #237a43,
+                #39a85e
             );
             color: white;
             font-size: 20px;
             font-weight: bold;
             border-radius: 12px;
-            border: 1px solid #86efac;
+            border: 1px solid #a7f3c0;
             transition: 0.3s;
         }}
 
         .stButton > button:hover {{
-            background: #16a34a;
+            background: #166534;
             color: white;
-            border: 2px solid white;
+            border: 1px solid white;
         }}
 
-        /* Image border */
+        /* Uploaded image */
 
         [data-testid="stImage"] img {{
-            border: 3px solid #22c55e;
+            border: 2px solid rgba(255, 255, 255, 0.7);
             border-radius: 14px;
         }}
 
-        /* Result box */
+        /* Prediction result */
 
         .result-box {{
             padding: 22px;
@@ -175,21 +182,23 @@ def set_background(image_path):
             font-size: 24px;
             font-weight: bold;
             color: white;
-            background: rgba(2, 44, 34, 0.95);
-            border: 2px solid #4ade80;
+            background: rgba(0, 0, 0, 0.70);
+            border: 2px solid #86efac;
             margin-top: 20px;
+            text-shadow: 1px 1px 3px black;
         }}
 
         /* Footer */
 
         .footer {{
             text-align: center;
-            color: #dcfce7;
+            color: white;
             font-size: 15px;
             padding: 20px;
-            background: rgba(2, 44, 34, 0.88);
-            border: 1px solid #16a34a;
+            background: rgba(0, 0, 0, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 12px;
+            text-shadow: 1px 1px 3px black;
         }}
 
         </style>
@@ -198,27 +207,33 @@ def set_background(image_path):
     )
 
 
+# Apply background
+
 set_background("forest_background.jpg")
 
 
 # ==========================================
-# 3. LOAD CNN MODEL
+# 3. LOAD TRAINED CNN MODEL
 # ==========================================
 
 @st.cache_resource
 def load_forest_model():
 
-    return tf.keras.models.load_model(
+    model = tf.keras.models.load_model(
         "forest_fire_model.keras",
         compile=False
     )
 
+    return model
+
 
 try:
+
     model = load_forest_model()
     model_status = True
 
 except Exception as e:
+
     model_status = False
     st.error(f"Model loading failed: {e}")
 
@@ -289,9 +304,11 @@ if uploaded_file is not None:
 
                         # Resize image
 
-                        resized_image = image.resize((160, 160))
+                        resized_image = image.resize(
+                            (160, 160)
+                        )
 
-                        # Convert image to array
+                        # Convert image into NumPy array
 
                         image_array = np.array(
                             resized_image,
@@ -305,8 +322,8 @@ if uploaded_file is not None:
                             axis=0
                         )
 
-                        # MobileNetV2 preprocessing is already
-                        # included inside the saved model.
+                        # Preprocessing is already included
+                        # inside the saved model.
 
                         prediction = model.predict(
                             image_array,
@@ -317,7 +334,7 @@ if uploaded_file is not None:
                             np.asarray(prediction).reshape(-1)[0]
                         )
 
-                        # Training mapping:
+                        # Training label mapping:
                         # FIRE = 0
                         # NON_FIRE = 1
 
@@ -343,6 +360,8 @@ if uploaded_file is not None:
 
                         st.success("🌳 NO FIRE DETECTED")
 
+                    # Display confidence
+
                     st.markdown(
                         f"""
                         <div class="result-box">
@@ -361,7 +380,7 @@ if uploaded_file is not None:
                 else:
 
                     st.error(
-                        "Model is not loaded. Check the model file."
+                        "Model is not loaded. Please check the model file."
                     )
 
     except Exception as e:
@@ -385,6 +404,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 
 
